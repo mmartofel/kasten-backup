@@ -1,0 +1,16 @@
+apiVersion: apik10.kasten.io/v1alpha1
+kind: K10
+metadata:
+  name: k10
+  namespace: kasten-io
+spec:
+  auth:
+    openshift:
+      enabled: true
+      dashboardURL: "https://api.cluster-2kd8b.dynamic.redhatworkshops.io:6443"
+      openshiftURL: "https://k10-route-kasten-io.apps.cluster-2kd8b.dynamic.redhatworkshops.io/k10"
+      insecureCA: false
+  route:
+    enabled: true
+    tls:
+      enabled: true

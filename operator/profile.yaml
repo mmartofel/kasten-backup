@@ -1,0 +1,16 @@
+apiVersion: config.kio.kasten.io/v1alpha1
+kind: Profile
+metadata:
+  name: minio-local
+  namespace: kasten-io
+spec:
+  locationSpec:
+    objectStore:
+      objectStoreType: S3
+      name: backup
+      region: none
+      endpoint: minio-service.minio.svc.cluster.local
+      skipSSLVerify: false
+    type: ObjectStore
+  type: Location
+

@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oauth-proxy-svc
+  namespace: kasten-io
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      service: oauth-proxy-svc
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: oauth-proxy-svc
+    spec:
+      containers:
+      - args:
+        - --https-address=:8083
+        - --http-address=:8080
+        - --tls-cert=/tls/tls.crt
+        - --tls-key=/tls/tls.key
+        - --provider=openshift
+        - --client-id=oauth-proxy-client
+        - --client-secret=oauthproxysecret
+        - --openshift-ca=/etc/pki/tls/cert.pem
+        - --openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        - --openshift-ca=/service-ca/service-ca.crt
+        - --scope=user:full user:info user:check-access user:list-projects
+        - --cookie-secret-file=/secret/session-secret
+        - --cookie-secure=true
+        - --upstream=http://gateway:80
+        - --pass-access-token
+        - --redirect-url=http://openshift.example.com/oauth2/callback
+        - --email-domain=*
+        image: openshift/oauth-proxy:latest
+        imagePullPolicy: Always
+        name: oauth-proxy
+        ports:
+        - containerPort: 8083
+          name: https
+          protocol: TCP
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 10m
+            memory: 20Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /service-ca
+          name: service-ca
+          readOnly: true
+        - mountPath: /secret
+          name: oauth-proxy-secret
+          readOnly: true
+        - mountPath: /tls
+          name: oauth-proxy-tls-secret
+          readOnly: true
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: k10-oauth-proxy
+      serviceAccountName: k10-oauth-proxy
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: service-ca
+        name: service-ca
+      - name: oauth-proxy-tls-secret
+        secret:
+          defaultMode: 420
+          secretName: oauth-proxy-tls-secret
+      - name: oauth-proxy-secret
+        secret:
+          defaultMode: 420
+          secretName: oauth-proxy-secret

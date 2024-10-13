@@ -1,0 +1,5 @@
+resources:
+# create minio project
+- minio-namespace.yaml
+# create Minio S3 service
+- minio.yaml
