@@ -1,3 +1,4 @@
+# K10 profile to hook Minio S3 which is local to cluster and located at minio namespace
 apiVersion: config.kio.kasten.io/v1alpha1
 kind: Profile
 metadata:
@@ -9,7 +10,7 @@ spec:
       objectStoreType: S3
       name: backup
       region: none
-      endpoint: minio-service.minio.svc.cluster.local
+      endpoint: http://minio-service.minio.svc.cluster.local
       skipSSLVerify: false
     type: ObjectStore
   type: Location

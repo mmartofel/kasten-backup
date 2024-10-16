@@ -7,9 +7,9 @@ spec:
   auth:
     openshift:
       enabled: true
-      dashboardURL: "https://api.cluster-2kd8b.dynamic.redhatworkshops.io:6443"
-      openshiftURL: "https://k10-route-kasten-io.apps.cluster-2kd8b.dynamic.redhatworkshops.io/k10"
-      insecureCA: false
+      openshiftURL: "https://api.cluster-p8nhx.dynamic.redhatworkshops.io:6443"
+      dashboardURL: "https://k10-route-kasten-io.apps.cluster-p8nhx.dynamic.redhatworkshops.io/k10"
+      insecureCA: true
   route:
     enabled: true
     tls:

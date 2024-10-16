@@ -1,0 +1,9 @@
+resources:
+# install Veem K10 operator
+- subscription.yaml
+# install K10 instance
+- k10.yaml
+# create K10 SnapshotClass to support pvc snapshots
+- kasten-snapshotclass.yaml
+# create K10 profile for local Minio S3 as a backup location
+- profile.yaml

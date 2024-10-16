@@ -1,22 +1,24 @@
+# Actual minio image
+# quay.io/minio/minio:RELEASE.2024-10-13T13-34-11Z
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: minio-pvc
-  namespace: kasten-io
+  namespace: minio
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 30Gi
+      storage: 20Gi
   volumeMode: Filesystem
 ---
 kind: Secret
 apiVersion: v1
 metadata:
   name: minio-secret
-  namespace: kasten-io
+  namespace: minio
 stringData:
   # change the username and password to your own values.
   # ensure that the user is at least 3 characters long and the password at least 8
@@ -27,7 +29,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: minio
-  namespace: kasten-io
+  namespace: minio
   labels:
     app: impressive-app
     app.kubernetes.io/component: minio-s3
@@ -35,7 +37,7 @@ metadata:
     app.kubernetes.io/part-of: S3_SUBSYSTEM
     app.openshift.io/runtime: S3
   annotations:
-    app.openshift.io/vcs-uri: 'https://github.com/mmartofel/oadp-backup'
+    app.openshift.io/vcs-uri: 'https://github.com/mmartofel/kasten-backup'
 spec:
   replicas: 1
   selector:
@@ -99,7 +101,7 @@ spec:
               subPath: minio
           terminationMessagePolicy: File
           image: >-
-            quay.io/minio/minio:RELEASE.2024-10-13T13-34-11Z
+            quay.io/minio/minio:RELEASE.2023-06-19T19-52-50Z
           args:
             - server
             - /data
@@ -119,7 +121,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: minio-service
-  namespace: kasten-io
+  namespace: minio
 spec:
   ipFamilies:
     - IPv4
@@ -143,7 +145,7 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   name: minio-api
-  namespace: kasten-io
+  namespace: minio
 spec:
   to:
     kind: Service
@@ -160,7 +162,7 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   name: minio-ui
-  namespace: kasten-io
+  namespace: minio
 spec:
   to:
     kind: Service
