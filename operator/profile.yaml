@@ -8,7 +8,7 @@ spec:
   locationSpec:
     objectStore:
       objectStoreType: S3
-      name: backup
+      name: k10
       region: none
       endpoint: http://minio-service.minio.svc.cluster.local:9000
       skipSSLVerify: false
