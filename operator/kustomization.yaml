@@ -1,4 +1,6 @@
 resources:
+# create kasten-io namespace to install operator in
+- kasten-io-namespace.yaml
 # install Veem K10 operator
 - subscription.yaml
 # install K10 instance

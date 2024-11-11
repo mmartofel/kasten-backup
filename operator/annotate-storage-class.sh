@@ -1,6 +1,8 @@
+#!/bin/bash
+
 #
 # To export block PVC's to S3 we need to annotate underlying StorageClass acordingly
-#
+#   
 # https://docs.kasten.io/latest/usage/protect.html#block-mode-export
 #
 
