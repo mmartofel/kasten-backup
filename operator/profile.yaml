@@ -10,8 +10,15 @@ spec:
       objectStoreType: S3
       name: backup
       region: none
-      endpoint: http://minio-service.minio.svc.cluster.local
+      endpoint: http://minio-service.minio.svc.cluster.local:9000
       skipSSLVerify: false
+    credential:
+      secretType: AwsAccessKey
+      secret:
+        apiVersion: v1
+        kind: secret
+        name: minio-credentials
+        namespace: kasten-io
     type: ObjectStore
   type: Location
 
