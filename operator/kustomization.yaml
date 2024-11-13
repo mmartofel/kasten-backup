@@ -1,11 +1,13 @@
 resources:
 # create kasten-io namespace to install operator in
-- kasten-io-namespace.yaml
+# - kasten-io-namespace.yaml
 # install Veem K10 operator
-- subscription.yaml
+# - subscription.yaml
 # install K10 instance
-- k10.yaml
+# - k10.yaml
 # create K10 SnapshotClass to support pvc snapshots
 - kasten-snapshotclass.yaml
+# create minio access secret
+- minio-credentials.yaml
 # create K10 profile for local Minio S3 as a backup location
-- profile.yaml
+- kasten-profile.yaml
